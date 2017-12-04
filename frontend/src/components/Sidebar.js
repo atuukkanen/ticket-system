@@ -12,10 +12,10 @@ class Sidebar extends Component {
 
                 <div className="menu-list">
                     <ul id="menu-content" className="menu-content">
-                        <SidebarLink name="dashboard" text="Työpöytä" />
-                        <SidebarLink name="ticket" text="Tiketit" />
-                        <SidebarLink name="users" text="Käyttäjät" />
-                        <SidebarLink name="cog" text="Asetukset" />
+                        <SidebarLink name="dashboard" text="Työpöytä" link="/" />
+                        <SidebarLink name="ticket" text="Tiketit" link="/tickets" />
+                        <SidebarLink name="users" text="Käyttäjät" link="/users" />
+                        <SidebarLink name="cog" text="Asetukset" link="/settings" />
                     </ul>
                 </div>
             </div>
