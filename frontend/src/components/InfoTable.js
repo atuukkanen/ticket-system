@@ -14,7 +14,7 @@ class InfoTable extends Component {
                     <thead>
                     <tr>
                         {this.props.fields.map(function (field) {
-                            return <th>{field.showName}</th>
+                            return <th key={field.name}>{field.showName}</th>
                         })}
                     </tr>
                     </thead>
