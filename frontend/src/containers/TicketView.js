@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/TicketView.css';
+import '../styles/Ticket.css';
 
 class TicketView extends Component {
     render() {

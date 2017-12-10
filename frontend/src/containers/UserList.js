@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import '../styles/UserList.css';
+import InfoTable from "../components/InfoTable";
+import '../styles/User.css';
 
 class UserList extends Component {
     render() {
@@ -26,29 +27,17 @@ class UserList extends Component {
         }];
         return (
             <div className="userList">
-                <div className="panel panel-default">
-                    <div className="panel-heading">
-                        <h4>Käyttäjät</h4>
-                    </div>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Käyttäjätunnus</th>
-                                <th>Nimi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users.map(function (user) {
-                                return <tr key={user.id}>
-                                    <td>{user.id}</td>
-                                    <td>{user.username}</td>
-                                    <td>{user.name}</td>
-                                </tr>
-                            })}
-                        </tbody>
-                    </table>
-                </div>
+                <InfoTable
+                    topic="Käyttäjät"
+                    rowClickPath="/users/"
+                    history={this.props.history}
+                    data={users}
+                    fields={[
+                        { name: "id", showName: "ID" },
+                        { name: "name", showName: "Nimi" },
+                        { name: "username", showName: "Käyttäjänimi" }
+                    ]}
+                />
             </div>
         );
     }
