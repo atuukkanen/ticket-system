@@ -1,19 +1,15 @@
 package fi.dalitso.ticketsystem.domain;
 
 
-public class Ticket {
+import javax.persistence.Entity;
 
-    private Long ticketId;
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+@Entity
+public class Ticket extends AbstractPersistable<Long> {
+
     private String header;
     private String description;
-
-    public Long getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(Long ticketId) {
-        this.ticketId = ticketId;
-    }
 
     public String getHeader() {
         return header;

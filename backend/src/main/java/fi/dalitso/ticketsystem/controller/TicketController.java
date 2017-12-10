@@ -3,6 +3,7 @@ package fi.dalitso.ticketsystem.controller;
 import fi.dalitso.ticketsystem.domain.Ticket;
 import fi.dalitso.ticketsystem.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +19,9 @@ public class TicketController {
         return ticketService.getAllTickets();
     }
 
-    public TicketService getTicketService() {
-        return ticketService;
-    }
-
     @Autowired
     public void setTicketService(TicketService ticketService) {
         this.ticketService = ticketService;
     }
+
 }
