@@ -7,23 +7,22 @@ class UserView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {
-                id: 4,
-                username: "pilvi",
-                name: "Pilvi Yksisarvinen"
-            }
+            user: {}
         };
         this.handleChange = this.handleChange.bind(this);
     }
-    handleChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        const user = this.state.user;
-        user[name] = value;
-        this.setState({
-            user: user
+    componentWillMount() {
+        fetch("/data/users/" + this.props.match.params.id + ".json").then(result => {
+            return result.json();
+        }).then(data => {
+            this.setState({user: data});
         });
+    }
+
+    handleChange(event) {
+        const user = this.state.user;
+        user[event.target.name] = event.target.value;
+        this.setState({ user: user });
     }
     render() {
         return (
