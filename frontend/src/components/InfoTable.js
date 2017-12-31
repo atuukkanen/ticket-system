@@ -21,9 +21,9 @@ class InfoTable extends Component {
                     <tbody>
                     {this.props.data.map(function (row) {
                         return <tr key={row.id} onClick={() => this.handleClick(row.id)}>
-                            <td>{row.id}</td>
-                            <td>{row.username}</td>
-                            <td>{row.name}</td>
+                            {this.props.fields.map(function (field) {
+                                return <td key={field.name}>{row[field.name]}</td>
+                            })}
                         </tr>
                     }, this)}
                     </tbody>
