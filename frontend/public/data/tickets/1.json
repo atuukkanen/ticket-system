@@ -1,3 +1,45 @@
 {
-
+  "id": 1,
+  "header": "Ticket System ei ole valmis",
+  "description": "Ticket System on vielä ~~vähän~~ *hyvin* **hyvin** __hyvin__ keskeneräinen. \n\nLorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor.",
+  "status": "OPEN",
+  "labels": [{
+    "name": "WIP",
+    "color": "#D1D100"
+  }],
+  "creator": {
+    "id": 1,
+    "username": "aikain",
+    "name": "Ville Nupponen"
+  },
+  "createTime": "2017-12-31 22:00:00",
+  "editor": null,
+  "editTime": null,
+  "comments": [{
+    "id": 1,
+    "content": "Tekis joh",
+    "creator": {
+      "id": 2,
+      "username": "teppo",
+      "name": "Seppo Taalasmaa"
+    },
+    "createTime": "2017-12-31 22:02:00",
+    "editor": {
+      "id": 2,
+      "username": "teppo",
+      "name": "Seppo Taalasmaa"
+    },
+    "editTime": "2017-12-31 22:02:30"
+  },{
+    "id": 2,
+    "content": "Koko ajan",
+    "creator": {
+      "id": 1,
+      "username": "aikain",
+      "name": "Ville Nupponen"
+    },
+    "createTime": "2017-12-31 22:04:00",
+    "editor": null,
+    "editTime": null
+  }]
 }
