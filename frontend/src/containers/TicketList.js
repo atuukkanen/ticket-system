@@ -25,7 +25,10 @@ class TicketView extends Component {
                     history={this.props.history}
                     data={this.state.tickets}
                     fields={[
-                        { name: "id", showName: "ID" }
+                        { name: "id", showName: "ID" },
+                        { name: "header", showName: "Otsikko" },
+                        { name: "status", showName: "Status" },
+                        { name: "createTime", showName: "Aika" }
                     ]} />
             </div>
         );
