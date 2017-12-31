@@ -2,3 +2,7 @@
     margin-left: 300px;
     padding: 20px;
 }
+
+table tbody tr {
+    cursor: pointer;
+}
