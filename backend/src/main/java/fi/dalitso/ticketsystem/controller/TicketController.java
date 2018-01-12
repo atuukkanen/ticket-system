@@ -1,5 +1,6 @@
 package fi.dalitso.ticketsystem.controller;
 
+import fi.dalitso.ticketsystem.domain.ModificationInfo;
 import fi.dalitso.ticketsystem.domain.Status;
 import fi.dalitso.ticketsystem.domain.Ticket;
 import fi.dalitso.ticketsystem.service.TicketService;
@@ -31,11 +32,14 @@ public class TicketController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Ticket createNewTicket(@RequestBody Ticket ticket) {
+        // TODO: Get real creator.
+        ticket.setCreator(new ModificationInfo("CreatorName"));
         return ticketService.addNewTicket(ticket);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Ticket updateTicket(@PathVariable Long id, @RequestBody Ticket uTicket) {
+        uTicket.setCreator(new ModificationInfo("EditingName"));
         return ticketService.update(id, uTicket);
     }
 
