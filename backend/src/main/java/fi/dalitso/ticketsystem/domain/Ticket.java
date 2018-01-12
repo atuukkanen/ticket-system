@@ -24,9 +24,22 @@ public class Ticket extends AbstractPersistable<Long> {
     @JoinColumn(name = "creatorId")
     private List<ModificationInfo> editingInfos;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "commentId")
+    private List<Comment> comments;
+
     public Ticket() {
         editingInfos = new ArrayList<>();
         images = new ArrayList<>();
+        comments = new ArrayList<>();
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public List<ModificationInfo> getEditingInfos() {
@@ -79,6 +92,7 @@ public class Ticket extends AbstractPersistable<Long> {
 
     /**
      * Updates ticket's data. Retains the creator and editing history.
+     * Does not affect comments, they should be updated by other ways.
      * Adds the creator of the update ticket to editing history.
      * @param uTicket Ticket containing data to use for replacing current
      *                ticket's info.
@@ -97,5 +111,13 @@ public class Ticket extends AbstractPersistable<Long> {
             setImages(uTicket.getImages());
 
         editingInfos.add(uTicket.getCreator());
+    }
+
+    /**
+     * Appends a new comment to the ticket's comment chain.
+     * @param newComment A new comment to be added.
+     */
+    public void addComment(Comment newComment) {
+        comments.add(newComment);
     }
 }
