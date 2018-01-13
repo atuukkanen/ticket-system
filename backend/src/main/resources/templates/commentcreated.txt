@@ -1,0 +1,4 @@
+Hey,
+
+User [(${userName})] commented a ticket:
+[(${url})]

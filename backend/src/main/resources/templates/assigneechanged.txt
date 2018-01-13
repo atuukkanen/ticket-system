@@ -1,0 +1,4 @@
+Hey,
+
+User [(${userName})] changed a ticket's assignee:
+[(${url})]
