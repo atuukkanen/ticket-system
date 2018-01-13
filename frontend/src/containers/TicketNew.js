@@ -17,6 +17,9 @@ class TicketNew extends Component {
         this.handleEditorChange = this.handleEditorChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    componentDidMount() {
+        document.querySelectorAll("button[title=Preview]")[0].setAttribute("type", "button");
+    }
     handleInputChange(event) {
         const value = event.target.value;
         const name = event.target.name;
