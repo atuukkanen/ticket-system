@@ -1,9 +1,9 @@
 package fi.dalitso.ticketsystem.domain;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
 
 @Entity
 public class Ticket extends AbstractPersistable<Long> {
