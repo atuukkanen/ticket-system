@@ -18,7 +18,7 @@ class TicketView extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentWillMount() {
-        fetch("http://localhost:8080/ticket/" + this.props.match.params.id + ".json").then(result => {
+        fetch("http://localhost:8080/ticket/" + this.props.match.params.id).then(result => {
             return result.json();
         }).then(data => {
             this.setState({ticket: data});
