@@ -1,15 +1,11 @@
 package fi.dalitso.ticketsystem.service;
 
 import fi.dalitso.ticketsystem.domain.Comment;
-import fi.dalitso.ticketsystem.domain.ModificationInfo;
 import fi.dalitso.ticketsystem.domain.Status;
 import fi.dalitso.ticketsystem.domain.Ticket;
-import fi.dalitso.ticketsystem.exception.TicketNotFoundException;
-import fi.dalitso.ticketsystem.repository.ModificationInfoRepository;
 import fi.dalitso.ticketsystem.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 
