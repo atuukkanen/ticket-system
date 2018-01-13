@@ -17,7 +17,7 @@ class TicketView extends Component {
         this.handleEditorChange = this.handleEditorChange.bind(this);
     }
     componentWillMount() {
-        fetch("/data/tickets/" + this.props.match.params.id + ".json").then(result => {
+        fetch("http://localhost:8080/ticket/" + this.props.match.params.id + ".json").then(result => {
             return result.json();
         }).then(data => {
             this.setState({ticket: data});
@@ -51,7 +51,7 @@ class TicketView extends Component {
                         </div>
                     )
                 }, this)}
-                <div className="commentEditor">
+                <div className="commentBlock commentEditor">
                     <Markmirror
                         value={this.state.comment}
                         onChange={this.handleEditorChange}

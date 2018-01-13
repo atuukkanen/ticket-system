@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import '../styles/Ticket.css';
 import InfoTable from "../components/InfoTable";
 
@@ -10,7 +11,7 @@ class TicketView extends Component {
         }
     }
     componentWillMount() {
-        fetch("/data/tickets.json").then(result => {
+        fetch("http://localhost:8080/ticket").then(result => {
             return result.json();
         }).then(data => {
             this.setState({tickets: data});
@@ -30,6 +31,7 @@ class TicketView extends Component {
                         { name: "status", showName: "Status" },
                         { name: "createTime", showName: "Aika" }
                     ]} />
+                <NavLink to="/ticket/new"><button className="btn">Uusi tiketti</button></NavLink>
             </div>
         );
     }

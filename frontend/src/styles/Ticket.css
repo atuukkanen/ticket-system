@@ -37,9 +37,6 @@
 .commentInfo span {
     color: rgba(0,0,0,0.55);
 }
-.commentEditor {
-    margin-left: 30px;
-}
 .commentEditor .markmirror__editor {
     height: 150px;
 }
