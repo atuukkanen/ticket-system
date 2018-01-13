@@ -18,7 +18,7 @@ class UserList extends Component {
     }
     render() {
         return (
-            <div className="userList">
+            <div className="userView">
                 <InfoTable
                     topic="Käyttäjät"
                     rowClickPath="/users/"
