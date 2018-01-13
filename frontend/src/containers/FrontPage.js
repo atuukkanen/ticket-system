@@ -19,7 +19,7 @@ class FrontPage extends Component {
                 <Route path="/tickets/:id" exact component={TicketView} />
                 <Route path="/users" exact component={UserList} />
                 <Route path="/users/:id" exact component={UserView} />
-                <Route path="/settings" exact component={Settings} />
+                <Route path="/settings" component={Settings} />
             </div>
         );
     }
