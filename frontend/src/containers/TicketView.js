@@ -15,6 +15,7 @@ class TicketView extends Component {
             comment: ''
         };
         this.handleEditorChange = this.handleEditorChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentWillMount() {
         fetch("http://localhost:8080/ticket/" + this.props.match.params.id + ".json").then(result => {
@@ -26,8 +27,21 @@ class TicketView extends Component {
     handleEditorChange(text) {
         this.setState({ comment: text});
     }
+    handleSubmit(event) {
+        fetch('http://localhost:8080/comment/' + this.state.ticket.id, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({commentText: this.state.comment}),
+        }).then(function () {
+            window.location.reload();
+        });
+        event.preventDefault();
+    }
     parseMD(text) {
-        if (text === undefined) return { __html: "" };
+        if (text === undefined || text === null) return { __html: "" };
         return { __html: Marked(text) };
     }
     render() {
@@ -47,18 +61,20 @@ class TicketView extends Component {
                             <div className="commentInfo">
                                 {comment.creator.name} <span>@{comment.creator.username} kommentoi {comment.createTime}</span>
                             </div>
-                            <div dangerouslySetInnerHTML={ this.parseMD(comment.content) }></div>
+                            <div dangerouslySetInnerHTML={ this.parseMD(comment.commentText) }></div>
                         </div>
                     )
                 }, this)}
                 <div className="commentBlock commentEditor">
-                    <Markmirror
-                        value={this.state.comment}
-                        onChange={this.handleEditorChange}
-                        showSearch={false}
-                        onPreview={value => (Marked(value))}
-                    />
-                    <button type="button" className="btn btn-success">Kommentoi</button>
+                    <form className="form-horizontal" onSubmit={this.handleSubmit}>
+                        <Markmirror
+                            value={this.state.comment}
+                            onChange={this.handleEditorChange}
+                            showSearch={false}
+                            onPreview={value => (Marked(value))}
+                        />
+                        <button type="submit" className="btn btn-success">Kommentoi</button>
+                    </form>
                 </div>
             </div>
         );
