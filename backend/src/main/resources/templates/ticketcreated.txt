@@ -1,0 +1,4 @@
+Hey,
+
+User [(${userName})] opened a new ticket:
+[(${url})]
