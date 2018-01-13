@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom'
 
 import Dashboard from '../containers/Dashboard';
 import TicketList from '../containers/TicketList';
+import TicketNew from '../containers/TicketNew';
 import TicketView from '../containers/TicketView';
 import UserList from '../containers/UserList';
 import UserView from '../containers/UserView';
@@ -16,6 +17,7 @@ class FrontPage extends Component {
             <div className="frontPage">
                 <Route path="/" exact component={Dashboard} />
                 <Route path="/tickets" exact component={TicketList} />
+                <Route path="/ticket/new" exact component={TicketNew} />
                 <Route path="/tickets/:id" exact component={TicketView} />
                 <Route path="/users" exact component={UserList} />
                 <Route path="/users/:id" exact component={UserView} />
