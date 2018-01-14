@@ -7,8 +7,8 @@ class NavItem extends Component {
 
     render() {
         return (
-            <li>
-                <NavLink exact to={this.props.to}>{this.props.text}</NavLink>
+            <li className="nav-item">
+                <NavLink className="nav-link" exact to={this.props.to}>{this.props.text}</NavLink>
             </li>
         )
     }
