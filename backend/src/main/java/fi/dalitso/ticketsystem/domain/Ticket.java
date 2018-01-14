@@ -92,7 +92,7 @@ public class Ticket extends AbstractPersistable<Long> {
 
     /**
      * Updates ticket's data. Retains the creation and editing history.
-     * Does not affect comments, they should be updated by other ways.
+     * Does not affect comments or status, they should be updated by other ways.
      * Adds the creation of the update ticket to editing history.
      * @param uTicket Ticket containing data to use for replacing current
      *                ticket's info.
@@ -104,13 +104,14 @@ public class Ticket extends AbstractPersistable<Long> {
         if (uTicket.getDescription() != null)
             setDescription(uTicket.getDescription());
 
-        if (uTicket.getStatus() != null)
-            setStatus(uTicket.getStatus());
-
         if (uTicket.getImages() != null)
             setImages(uTicket.getImages());
 
         editingInfos.add(uTicket.getCreation());
+    }
+
+    public void close(ModificationInfo closeInfo) {
+        setStatus(Status.CLOSED);
     }
 
     /**

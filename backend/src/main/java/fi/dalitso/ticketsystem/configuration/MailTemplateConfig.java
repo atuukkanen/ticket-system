@@ -36,6 +36,8 @@ public class MailTemplateConfig {
                 environment.getProperty("mail.template.ticketcreated"));
         mailContentBuilder.setTicketUpdatedTemplateName(
                 environment.getProperty("mail.template.ticketupdated"));
+        mailContentBuilder.setTicketClosedName(
+                environment.getProperty("mail.template.ticketclosed"));
 
         mailContentBuilder.setTemplateEngine(templateEngine());
         return mailContentBuilder;

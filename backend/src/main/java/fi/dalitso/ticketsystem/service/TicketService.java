@@ -1,6 +1,7 @@
 package fi.dalitso.ticketsystem.service;
 
 import fi.dalitso.ticketsystem.domain.Comment;
+import fi.dalitso.ticketsystem.domain.ModificationInfo;
 import fi.dalitso.ticketsystem.domain.Status;
 import fi.dalitso.ticketsystem.domain.Ticket;
 import fi.dalitso.ticketsystem.repository.TicketRepository;
@@ -42,6 +43,15 @@ public class TicketService {
             return null;
         oldTicket.addComment(comment);
         return oldTicket;
+    }
+
+    @Transactional
+    public Ticket close(Long ticketId, ModificationInfo closingInfo) {
+        Ticket ticketToClose = ticketRepository.findOne(ticketId);
+        if (ticketToClose == null)
+            return null;
+        ticketToClose.close(closingInfo);
+        return ticketToClose;
     }
 
     public List<Ticket> getAllByStatus(Status status) {
