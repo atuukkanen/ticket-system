@@ -17,13 +17,12 @@ public class MailContentBuilder {
     private String commentUpdatedTemplateName;
     private String assigneeChangedTemplateName;
 
-    public String getMailContent(Action action, String userName, String url) {
-        HashMap<String, Object> content = new HashMap<>();
-        content.put("userName", userName);
-        content.put("url", url);
+    public String build(Action action, Map<String, Object> content) {
+        Context context = new Context();
+        context.setVariables(content);
         String templateName = getTemplateName(action);
-
-        return templateName != null ? build(templateName, content) : null;
+        return templateName != null ?
+                templateEngine.process(templateName, context) : null;
     }
 
     private String getTemplateName(Action action) {
@@ -40,12 +39,6 @@ public class MailContentBuilder {
                 return assigneeChangedTemplateName;
         }
         return null;
-    }
-
-    private String build(String templateName, Map<String, Object> content) {
-        Context context = new Context();
-        context.setVariables(content);
-        return templateEngine.process(templateName, context);
     }
 
     public void setTemplateEngine(TemplateEngine templateEngine) {

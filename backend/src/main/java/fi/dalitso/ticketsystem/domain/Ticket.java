@@ -21,7 +21,7 @@ public class Ticket extends AbstractPersistable<Long> {
     private ModificationInfo creation;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "editingId")
+    @JoinColumn(name = "creationId")
     private List<ModificationInfo> editingInfos;
 
     @OneToMany(cascade = CascadeType.ALL)
