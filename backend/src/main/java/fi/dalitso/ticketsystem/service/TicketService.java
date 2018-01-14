@@ -38,15 +38,6 @@ public class TicketService {
     }
 
     @Transactional
-    public Ticket addComment(Long ticketId, Comment comment) {
-        Ticket oldTicket = getTicket(ticketId);
-        if (oldTicket == null)
-            return null;
-        oldTicket.addComment(comment);
-        return oldTicket;
-    }
-
-    @Transactional
     public Ticket close(Long ticketId, ModificationInfo closingInfo) {
         Ticket ticketToClose = getTicket(ticketId);
         if (ticketToClose == null)
