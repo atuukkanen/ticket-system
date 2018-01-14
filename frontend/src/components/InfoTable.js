@@ -10,7 +10,7 @@ class InfoTable extends Component {
                 <div className="panel-heading">
                     <h4>{ this.props.topic }</h4>
                 </div>
-                <table className="table table-striped">
+                <table className="table table-striped table-hover">
                     <thead>
                     <tr>
                         {this.props.fields.map(function (field) {
