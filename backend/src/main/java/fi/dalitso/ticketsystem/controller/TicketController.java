@@ -112,7 +112,7 @@ public class TicketController {
      * @param id The id of the ticket the caller wants to open.
      * @return The opened ticket.
      */
-    @ApiOperation(value = "Close the ticket with given id.")
+    @ApiOperation(value = "Open the ticket with given id.")
     @RequestMapping(value = "/open/{id}", method = RequestMethod.PUT)
     public Ticket openTicket(@PathVariable Long id)
             throws TicketStatusSameException, TicketNotFoundException {
