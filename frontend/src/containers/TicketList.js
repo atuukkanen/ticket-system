@@ -11,7 +11,7 @@ class TicketView extends Component {
         }
     }
     componentWillMount() {
-        fetch("http://localhost:8080/ticket").then(result => {
+        fetch("/api/ticket").then(result => {
             return result.json();
         }).then(data => {
             this.setState({tickets: data});

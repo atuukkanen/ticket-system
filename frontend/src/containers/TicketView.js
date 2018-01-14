@@ -18,7 +18,7 @@ class TicketView extends Component {
         };
     }
     componentWillMount() {
-        fetch("http://localhost:8080/ticket/" + this.props.match.params.id).then(result => {
+        fetch("/api/ticket/" + this.props.match.params.id).then(result => {
             return result.json();
         }).then(data => {
             this.setState({ticket: data});
@@ -28,7 +28,7 @@ class TicketView extends Component {
         this.setState({ comment: text});
     };
     handleSubmit = (event) => {
-        fetch('http://localhost:8080/comment/' + this.state.ticket.id, {
+        fetch('/api/comment/' + this.state.ticket.id, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
