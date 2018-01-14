@@ -1,0 +1,8 @@
+.settings {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.settings .nav {
+    margin-bottom: 20px;
+}
