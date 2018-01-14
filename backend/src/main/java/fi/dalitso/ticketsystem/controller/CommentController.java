@@ -4,6 +4,9 @@ import fi.dalitso.ticketsystem.domain.*;
 import fi.dalitso.ticketsystem.service.CommentService;
 import fi.dalitso.ticketsystem.service.NotifierService;
 import fi.dalitso.ticketsystem.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +21,13 @@ public class CommentController {
     private UserService userService;
     private NotifierService notifier;
 
+    @ApiOperation(value = "Get all comments.")
     @RequestMapping(method = RequestMethod.GET)
     public List<Comment> getAllComments() {
         return commentService.getAllComments();
     }
 
+    @ApiOperation(value = "Edit an existing comment.")
     @RequestMapping(value = "/{commentId}", method = RequestMethod.PUT)
     public Comment update(@PathVariable Long commentId, @RequestBody Comment comment) {
         User editingUser = userService.getAuthenticatedUser();
@@ -34,6 +39,7 @@ public class CommentController {
         return editedComment;
     }
 
+    @ApiOperation(value = "Add a new comment to an existing ticket.")
     @RequestMapping(value = "/{ticketId}", method = RequestMethod.POST)
     public Ticket addNewComment(@PathVariable Long ticketId, @RequestBody Comment comment) {
         User commentingUser = userService.getAuthenticatedUser();

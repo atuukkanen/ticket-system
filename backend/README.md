@@ -1,5 +1,6 @@
 # Ticket System Backend
 
+
 ## Environmental Variables
 
 ### Required
@@ -14,3 +15,8 @@
 * MAIL_PORT (default value: ```587```)
 * MAIL_PROTOCOL (default value: ```smtp```)
 * JPA_SHOW_SQL (default value: ```false```)
+
+
+## Swagger Documentation
+
+Swagger UI documentation for endpoints is available in host/application-root/swagger-ui.html
