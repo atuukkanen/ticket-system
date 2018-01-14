@@ -1,4 +1,4 @@
 Hey,
 
-User [(${userName})] changed a ticket's assignee:
-[(${url})]
+User [(${username})] assigned themselves to your ticket:
+/ticket/[(${ticketid})]
