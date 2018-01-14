@@ -15,7 +15,9 @@ class TicketNew extends Component {
         };
     }
     componentDidMount() {
-        document.querySelectorAll("button[title=Preview]")[0].setAttribute("type", "button");
+        document.querySelectorAll("button:not([type=button])").forEach(function(element) {
+            element.setAttribute("type", "button");
+        });
     }
     handleInputChange = (event) => {
         const value = event.target.value;

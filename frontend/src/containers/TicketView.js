@@ -17,6 +17,11 @@ class TicketView extends Component {
             comment: ''
         };
     }
+    componentDidMount() {
+        document.querySelectorAll("button:not([type=button]):not([type=submit])").forEach(function(element) {
+            element.setAttribute("type", "button");
+        });
+    }
     componentWillMount() {
         fetch("/api/ticket/" + this.props.match.params.id).then(result => {
             return result.json();
