@@ -16,11 +16,11 @@ public class Comment extends AbstractPersistable<Long> {
     private List<Image> images;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "creatorId")
-    private ModificationInfo creator;
+    @JoinColumn(name = "creationId")
+    private ModificationInfo creation;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "editorId")
+    @JoinColumn(name = "editingId")
     private List<ModificationInfo> editingInfos;
 
     public Comment() {
@@ -34,7 +34,7 @@ public class Comment extends AbstractPersistable<Long> {
         if (uComment.getImages() != null)
             setImages(uComment.getImages());
 
-        editingInfos.add(uComment.getCreator());
+        editingInfos.add(uComment.getCreation());
     }
 
     public String getCommentText() {
@@ -53,12 +53,12 @@ public class Comment extends AbstractPersistable<Long> {
         this.images = images;
     }
 
-    public ModificationInfo getCreator() {
-        return creator;
+    public ModificationInfo getCreation() {
+        return creation;
     }
 
-    public void setCreator(ModificationInfo creator) {
-        this.creator = creator;
+    public void setCreation(ModificationInfo creator) {
+        this.creation = creator;
     }
 
     public List<ModificationInfo> getEditingInfos() {
