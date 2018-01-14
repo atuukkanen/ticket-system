@@ -1,6 +1,8 @@
 package fi.dalitso.ticketsystem.controller;
 
 import fi.dalitso.ticketsystem.domain.*;
+import fi.dalitso.ticketsystem.exception.CommentNotFoundException;
+import fi.dalitso.ticketsystem.exception.TicketNotFoundException;
 import fi.dalitso.ticketsystem.service.CommentService;
 import fi.dalitso.ticketsystem.service.NotifierService;
 import fi.dalitso.ticketsystem.service.UserService;
@@ -29,7 +31,8 @@ public class CommentController {
 
     @ApiOperation(value = "Edit an existing comment.")
     @RequestMapping(value = "/{commentId}", method = RequestMethod.PUT)
-    public Comment update(@PathVariable Long commentId, @RequestBody Comment comment) {
+    public Comment update(@PathVariable Long commentId,
+                          @RequestBody Comment comment) throws CommentNotFoundException {
         User editingUser = userService.getAuthenticatedUser();
         comment.setCreation(new ModificationInfo(editingUser));
 
@@ -41,7 +44,8 @@ public class CommentController {
 
     @ApiOperation(value = "Add a new comment to an existing ticket.")
     @RequestMapping(value = "/{ticketId}", method = RequestMethod.POST)
-    public Ticket addNewComment(@PathVariable Long ticketId, @RequestBody Comment comment) {
+    public Ticket addNewComment(@PathVariable Long ticketId,
+                                @RequestBody Comment comment) throws TicketNotFoundException {
         User commentingUser = userService.getAuthenticatedUser();
         comment.setCreation(new ModificationInfo(commentingUser));
 
