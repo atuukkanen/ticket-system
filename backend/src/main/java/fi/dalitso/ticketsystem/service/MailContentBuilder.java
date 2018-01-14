@@ -16,6 +16,7 @@ public class MailContentBuilder {
     private String commentCreatedTemplateName;
     private String commentUpdatedTemplateName;
     private String assigneeChangedTemplateName;
+    private String ticketClosedName;
 
     public String build(Action action, Map<String, Object> content) {
         Context context = new Context();
@@ -37,6 +38,8 @@ public class MailContentBuilder {
                 return commentUpdatedTemplateName;
             case ASSIGNEE_CHANGED:
                 return assigneeChangedTemplateName;
+            case TICKET_CLOSED:
+                return ticketClosedName;
         }
         return null;
     }
@@ -63,5 +66,9 @@ public class MailContentBuilder {
 
     public void setAssigneeChangedTemplateName(String assigneeChangedTemplateName) {
         this.assigneeChangedTemplateName = assigneeChangedTemplateName;
+    }
+
+    public void setTicketClosedName(String ticketClosedName) {
+        this.ticketClosedName = ticketClosedName;
     }
 }
