@@ -28,6 +28,10 @@ public class Ticket extends AbstractPersistable<Long> {
     @JoinColumn(name = "commentId")
     private List<Comment> comments;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "assigneeId")
+    private User assignee;
+
     public Ticket() {
         editingInfos = new ArrayList<>();
         images = new ArrayList<>();
@@ -90,12 +94,20 @@ public class Ticket extends AbstractPersistable<Long> {
         this.images = images;
     }
 
+    public User getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(User assignee) {
+        this.assignee = assignee;
+    }
+
     /**
-     * Updates ticket's data. Retains the creation and editing history.
-     * Does not affect comments or status, they should be updated by other ways.
-     * Adds the creation of the update ticket to editing history.
+     * Updates ticket's content. Retains the creation and editing history.
+     * Does not affect comments, status or assignee, they should be updated by
+     * other ways. Adds the creation of the update ticket to editing history.
      * @param uTicket Ticket containing data to use for replacing current
-     *                ticket's info.
+     *                ticket's content.
      */
     public void update(Ticket uTicket) {
         if (uTicket.getHeader() != null)
@@ -108,6 +120,10 @@ public class Ticket extends AbstractPersistable<Long> {
             setImages(uTicket.getImages());
 
         editingInfos.add(uTicket.getCreation());
+    }
+
+    public void assign(User newAssignee) {
+        setAssignee(newAssignee);
     }
 
     public void close(ModificationInfo closeInfo) {

@@ -1,4 +1,4 @@
 Hey,
 
-User [(${username})] assigned themselves to your ticket:
+Assignee in your ticket was changed. The ticket is now [(${#strings.isEmpty(username) ? "unassigned" : "assigned to user " + username})].
 /ticket/[(${ticketid})]

@@ -1,9 +1,6 @@
 package fi.dalitso.ticketsystem.service;
 
-import fi.dalitso.ticketsystem.domain.Comment;
-import fi.dalitso.ticketsystem.domain.ModificationInfo;
-import fi.dalitso.ticketsystem.domain.Status;
-import fi.dalitso.ticketsystem.domain.Ticket;
+import fi.dalitso.ticketsystem.domain.*;
 import fi.dalitso.ticketsystem.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +24,13 @@ public class TicketService {
         return ticketRepository.save(t);
     }
 
+    public List<Ticket> getAllByStatus(Status status) {
+        return ticketRepository.findAllByStatus(status);
+    }
+
     @Transactional
     public Ticket update(Long id, Ticket uTicket) {
-        Ticket oldTicket = ticketRepository.findOne(id);
+        Ticket oldTicket = getTicket(id);
         if (oldTicket == null)
             return null;
         oldTicket.update(uTicket);
@@ -38,7 +39,7 @@ public class TicketService {
 
     @Transactional
     public Ticket addComment(Long ticketId, Comment comment) {
-        Ticket oldTicket = ticketRepository.findOne(ticketId);
+        Ticket oldTicket = getTicket(ticketId);
         if (oldTicket == null)
             return null;
         oldTicket.addComment(comment);
@@ -47,15 +48,20 @@ public class TicketService {
 
     @Transactional
     public Ticket close(Long ticketId, ModificationInfo closingInfo) {
-        Ticket ticketToClose = ticketRepository.findOne(ticketId);
+        Ticket ticketToClose = getTicket(ticketId);
         if (ticketToClose == null)
             return null;
         ticketToClose.close(closingInfo);
         return ticketToClose;
     }
 
-    public List<Ticket> getAllByStatus(Status status) {
-        return ticketRepository.findAllByStatus(status);
+    @Transactional
+    public Ticket assign(Long ticketId, User assignee) {
+        Ticket ticketToAssign = getTicket(ticketId);
+        if (ticketToAssign == null)
+            return null;
+        ticketToAssign.assign(assignee);
+        return ticketToAssign;
     }
 
     @Autowired

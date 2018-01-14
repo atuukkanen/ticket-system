@@ -104,6 +104,22 @@ public class TicketController {
     }
 
     /**
+     * Assigns the ticket with given id to the authenticated user.
+     * @param ticketId The ticket's id.
+     * @return The assigned ticket.
+     */
+    @ApiOperation(value = "Assign the authenticated user to the ticket with given id.")
+    @RequestMapping(value = "/assign/{ticketId}", method = RequestMethod.POST)
+    public Ticket assignTicket(@PathVariable Long ticketId) {
+        User assignee = userService.getAuthenticatedUser();
+
+        Ticket assignedTicket = ticketService.assign(ticketId, assignee);
+        notifier.notify(Action.ASSIGNEE_CHANGED, assignedTicket,
+                null, assignedTicket.getCreation().getCreator());
+        return assignedTicket;
+    }
+
+    /**
      * Simply sets the TicketService.
      * @param ticketService The TicketService to set.
      */
