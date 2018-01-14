@@ -1,6 +1,8 @@
 package fi.dalitso.ticketsystem.controller;
 
 import fi.dalitso.ticketsystem.domain.*;
+import fi.dalitso.ticketsystem.exception.TicketNotFoundException;
+import fi.dalitso.ticketsystem.exception.TicketStatusSameException;
 import fi.dalitso.ticketsystem.service.NotifierService;
 import fi.dalitso.ticketsystem.service.TicketService;
 import fi.dalitso.ticketsystem.service.UserService;
@@ -79,7 +81,8 @@ public class TicketController {
      */
     @ApiOperation(value = "Edit the ticket with given id.")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Ticket updateTicket(@PathVariable Long id, @RequestBody Ticket uTicket) {
+    public Ticket updateTicket(@PathVariable Long id,
+                               @RequestBody Ticket uTicket) throws TicketNotFoundException {
         User updater = userService.getAuthenticatedUser();
         uTicket.setCreation(new ModificationInfo(updater));
 
@@ -94,13 +97,30 @@ public class TicketController {
      * @return The closed ticket.
      */
     @ApiOperation(value = "Close the ticket with given id.")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Ticket closeTicket(@PathVariable Long id) {
+    @RequestMapping(value = "/close/{id}", method = RequestMethod.PUT)
+    public Ticket closeTicket(@PathVariable Long id)
+            throws TicketStatusSameException, TicketNotFoundException {
         User closer = userService.getAuthenticatedUser();
 
         Ticket closedTicket = ticketService.close(id, new ModificationInfo(closer));
         notifier.notify(Action.TICKET_CLOSED, closedTicket, null, closer);
         return closedTicket;
+    }
+
+    /**
+     * Opens the ticket with given id.
+     * @param id The id of the ticket the caller wants to open.
+     * @return The opened ticket.
+     */
+    @ApiOperation(value = "Close the ticket with given id.")
+    @RequestMapping(value = "/open/{id}", method = RequestMethod.PUT)
+    public Ticket openTicket(@PathVariable Long id)
+            throws TicketStatusSameException, TicketNotFoundException {
+        User opener = userService.getAuthenticatedUser();
+
+        Ticket openedTicket = ticketService.open(id);
+        notifier.notify(Action.TICKET_OPENED, openedTicket, null, opener);
+        return openedTicket;
     }
 
     /**
@@ -110,7 +130,8 @@ public class TicketController {
      */
     @ApiOperation(value = "Assign the authenticated user to the ticket with given id.")
     @RequestMapping(value = "/assign/{ticketId}", method = RequestMethod.POST)
-    public Ticket assignTicket(@PathVariable Long ticketId) {
+    public Ticket assignTicket(@PathVariable Long ticketId)
+            throws TicketNotFoundException {
         User assignee = userService.getAuthenticatedUser();
 
         Ticket assignedTicket = ticketService.assign(ticketId, assignee);
