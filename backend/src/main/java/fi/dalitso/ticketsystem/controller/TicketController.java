@@ -57,6 +57,7 @@ public class TicketController {
         User ticketCreator = userService.getAuthenticatedUser();
         ticket.setCreation(new ModificationInfo(ticketCreator));
 
+        ticket.setStatus(Status.OPEN);
         Ticket createdTicket = ticketService.addNewTicket(ticket);
         notifier.notify(Action.TICKET_CREATED, ticket, null, ticketCreator);
         return createdTicket;
@@ -78,6 +79,20 @@ public class TicketController {
         Ticket updatedTicket = ticketService.update(id, uTicket);
         notifier.notify(Action.TICKET_UPDATED, updatedTicket, null, updater);
         return updatedTicket;
+    }
+
+    /**
+     * Closes the ticket with given id.
+     * @param id The id of the ticket the caller wants to close.
+     * @return The closed ticket.
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public Ticket closeTicket(@PathVariable Long id) {
+        User closer = userService.getAuthenticatedUser();
+
+        Ticket closedTicket = ticketService.close(id, new ModificationInfo(closer));
+        notifier.notify(Action.TICKET_CLOSED, closedTicket, null, closer);
+        return closedTicket;
     }
 
     /**

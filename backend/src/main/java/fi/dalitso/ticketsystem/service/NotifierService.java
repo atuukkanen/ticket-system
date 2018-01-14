@@ -28,6 +28,12 @@ public class NotifierService {
                 contentArguments.put("ticketid", ticket.getId());
                 contentArguments.put("commentid", comment.getId());
                 break;
+            case TICKET_CLOSED:
+                to = ticket.getCreation().getCreator().getEmail();
+                subject = "Your ticket #" + ticket.getId() + ": '" + ticket.getHeader() + "' was closed";
+                contentArguments.put("username", authenticatedUser.getNickname());
+                contentArguments.put("ticketid", ticket.getId());
+                break;
             default:
                 return;
         }

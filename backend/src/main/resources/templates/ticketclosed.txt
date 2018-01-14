@@ -1,0 +1,4 @@
+Hey,
+
+User [(${username})] closed your ticket:
+/ticket/[(${ticketid})]
