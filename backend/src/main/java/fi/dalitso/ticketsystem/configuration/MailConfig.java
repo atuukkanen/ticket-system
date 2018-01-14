@@ -87,7 +87,7 @@ public class MailConfig {
         javaMailProperties.put("mail.smtp.starttls.enable",
                 mailProperties.get("mail.smtp.starttls.enable"));
         javaMailProperties.put("mail.smtp.ssl.trust",
-                getEnvironmentVariable("MAIL_HOSTNAME"));
+                mailSenderStuff.get("MAIL_HOSTNAME"));
         javaMailProperties.put("mail.smtp.quitwait",
                 mailProperties.get("mail.smtp.quitwait"));
         mailSender.setJavaMailProperties(javaMailProperties);
