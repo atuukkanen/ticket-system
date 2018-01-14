@@ -31,7 +31,7 @@ class TicketView extends Component {
                         { name: "status", showName: "Status" },
                         { name: "createTime", showName: "Aika" }
                     ]} />
-                <NavLink to="/ticket/new"><button className="btn">Uusi tiketti</button></NavLink>
+                <NavLink to="/ticket/new"><button className="btn btn-success">Uusi tiketti</button></NavLink>
             </div>
         );
     }

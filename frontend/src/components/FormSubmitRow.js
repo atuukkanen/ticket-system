@@ -8,7 +8,7 @@ class FormSubmitRow extends Component {
         return (
             <div className="form-group">
                 <label className="col-md-2 control-label"/>
-                <div className="col-md-9">
+                <div className="col-md-9 submitRow">
                     <input type="submit" className="btn btn-primary" value="Tallenna" />
                     <span/>
                     <input type="reset" className="btn btn-default" value="Peruuta" onClick={() => this.backToPrevPage()} />
