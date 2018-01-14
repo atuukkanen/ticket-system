@@ -2,6 +2,8 @@ package fi.dalitso.ticketsystem.service;
 
 import fi.dalitso.ticketsystem.domain.Comment;
 import fi.dalitso.ticketsystem.domain.Ticket;
+import fi.dalitso.ticketsystem.exception.CommentNotFoundException;
+import fi.dalitso.ticketsystem.exception.TicketNotFoundException;
 import fi.dalitso.ticketsystem.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,19 +26,21 @@ public class CommentService {
     }
 
     @Transactional
-    public Ticket addNewComment(Long ticketId, Comment comment) {
+    public Ticket addNewComment(Long ticketId, Comment comment)
+                                            throws TicketNotFoundException {
         Ticket ticketToComment = ticketService.getTicket(ticketId);
         if (ticketToComment == null)
-            return null;
+            throw new TicketNotFoundException();
         ticketToComment.addComment(comment);
         return ticketToComment;
     }
 
     @Transactional
-    public Comment update(Long id, Comment uComment) {
+    public Comment update(Long id, Comment uComment)
+                                            throws CommentNotFoundException {
         Comment oldComment = commentRepository.findOne(id);
         if (oldComment == null)
-            return null;
+            throw new CommentNotFoundException();
         oldComment.update(uComment);
         return oldComment;
     }
