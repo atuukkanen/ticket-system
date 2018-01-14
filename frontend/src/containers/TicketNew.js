@@ -26,7 +26,7 @@ class TicketNew extends Component {
         this.setState({ description: text});
     };
     handleSubmit = (event) => {
-        fetch('http://localhost:8080/ticket', {
+        fetch('/api/ticket', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
