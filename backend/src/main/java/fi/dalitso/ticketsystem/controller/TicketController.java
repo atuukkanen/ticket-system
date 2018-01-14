@@ -1,9 +1,7 @@
 package fi.dalitso.ticketsystem.controller;
 
-import fi.dalitso.ticketsystem.domain.ModificationInfo;
-import fi.dalitso.ticketsystem.domain.Status;
-import fi.dalitso.ticketsystem.domain.Ticket;
-import fi.dalitso.ticketsystem.domain.User;
+import fi.dalitso.ticketsystem.domain.*;
+import fi.dalitso.ticketsystem.service.NotifierService;
 import fi.dalitso.ticketsystem.service.TicketService;
 import fi.dalitso.ticketsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ public class TicketController {
 
     private TicketService ticketService;
     private UserService userService;
+    private NotifierService notifier;
 
     /**
      * Fetches all tickets in the Ticket System.
@@ -57,7 +56,10 @@ public class TicketController {
     public Ticket createNewTicket(@RequestBody Ticket ticket) {
         User ticketCreator = userService.getAuthenticatedUser();
         ticket.setCreation(new ModificationInfo(ticketCreator));
-        return ticketService.addNewTicket(ticket);
+
+        Ticket createdTicket = ticketService.addNewTicket(ticket);
+        notifier.notify(Action.TICKET_CREATED, ticket, null, ticketCreator);
+        return createdTicket;
     }
 
     /**
@@ -70,14 +72,17 @@ public class TicketController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Ticket updateTicket(@PathVariable Long id, @RequestBody Ticket uTicket) {
-        User ticketUpdater = userService.getAuthenticatedUser();
-        uTicket.setCreation(new ModificationInfo(ticketUpdater));
-        return ticketService.update(id, uTicket);
+        User updater = userService.getAuthenticatedUser();
+        uTicket.setCreation(new ModificationInfo(updater));
+
+        Ticket updatedTicket = ticketService.update(id, uTicket);
+        notifier.notify(Action.TICKET_UPDATED, updatedTicket, null, updater);
+        return updatedTicket;
     }
 
     /**
      * Simply sets the TicketService.
-     * @param ticketService The TicketService to be set.
+     * @param ticketService The TicketService to set.
      */
     @Autowired
     public void setTicketService(TicketService ticketService) {
@@ -91,5 +96,14 @@ public class TicketController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * Simply sets the NotifierService.
+     * @param notifier The NotifierService to set.
+     */
+    @Autowired
+    public void setNotifier(NotifierService notifier) {
+        this.notifier = notifier;
     }
 }

@@ -1,4 +1,4 @@
 Hey,
 
-User [(${userName})] commented a ticket:
-[(${url})]
+User [(${username})] commented a ticket:
+/ticket/[(${ticketid})]#comment-[(${commentid})]
