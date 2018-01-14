@@ -13,22 +13,19 @@ class TicketNew extends Component {
             header: '',
             description: ''
         };
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleEditorChange = this.handleEditorChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
         document.querySelectorAll("button[title=Preview]")[0].setAttribute("type", "button");
     }
-    handleInputChange(event) {
+    handleInputChange = (event) => {
         const value = event.target.value;
         const name = event.target.name;
         this.setState({ [name]: value });
-    }
-    handleEditorChange(text) {
+    };
+    handleEditorChange = (text) => {
         this.setState({ description: text});
-    }
-    handleSubmit(event) {
+    };
+    handleSubmit = (event) => {
         fetch('http://localhost:8080/ticket', {
             method: 'POST',
             headers: {
@@ -42,7 +39,7 @@ class TicketNew extends Component {
             this.props.history.push("/tickets/" + dataJSON.id);
         });
         event.preventDefault();
-    }
+    };
     render() {
         return (
             <div className="ticketView">

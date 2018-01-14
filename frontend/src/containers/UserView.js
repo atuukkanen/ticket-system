@@ -9,7 +9,6 @@ class UserView extends Component {
         this.state = {
             user: {}
         };
-        this.handleChange = this.handleChange.bind(this);
     }
     componentWillMount() {
         fetch("/data/users/" + this.props.match.params.id + ".json").then(result => {
@@ -18,12 +17,11 @@ class UserView extends Component {
             this.setState({user: data});
         });
     }
-
-    handleChange(event) {
+    handleChange = (event) => {
         const user = this.state.user;
         user[event.target.name] = event.target.value;
         this.setState({ user: user });
-    }
+    };
     render() {
         return (
             <div className="userView">
