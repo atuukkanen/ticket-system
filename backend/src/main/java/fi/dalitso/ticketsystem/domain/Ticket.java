@@ -32,6 +32,10 @@ public class Ticket extends AbstractPersistable<Long> {
     @JoinColumn(name = "assigneeId")
     private User assignee;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "closingId")
+    private ModificationInfo closing;
+
     public Ticket() {
         editingInfos = new ArrayList<>();
         images = new ArrayList<>();
@@ -102,6 +106,14 @@ public class Ticket extends AbstractPersistable<Long> {
         this.assignee = assignee;
     }
 
+    public ModificationInfo getClosing() {
+        return closing;
+    }
+
+    public void setClosing(ModificationInfo closing) {
+        this.closing = closing;
+    }
+
     /**
      * Updates ticket's content. Retains the creation and editing history.
      * Does not affect comments, status or assignee, they should be updated by
@@ -128,6 +140,12 @@ public class Ticket extends AbstractPersistable<Long> {
 
     public void close(ModificationInfo closeInfo) {
         setStatus(Status.CLOSED);
+        setClosing(closeInfo);
+    }
+
+    public void open() {
+        setStatus(Status.OPEN);
+        setClosing(null);
     }
 
     /**
