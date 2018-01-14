@@ -3,7 +3,9 @@ package fi.dalitso.ticketsystem.controller;
 import fi.dalitso.ticketsystem.domain.Comment;
 import fi.dalitso.ticketsystem.domain.ModificationInfo;
 import fi.dalitso.ticketsystem.domain.Ticket;
+import fi.dalitso.ticketsystem.domain.User;
 import fi.dalitso.ticketsystem.service.CommentService;
+import fi.dalitso.ticketsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class CommentController {
 
     private CommentService commentService;
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Comment> getAllComments() {
@@ -23,20 +26,25 @@ public class CommentController {
 
     @RequestMapping(value = "/{commentId}", method = RequestMethod.PUT)
     public Comment update(@PathVariable Long commentId, @RequestBody Comment comment) {
-        // TODO: Get the real editing user.
-        comment.setCreator(new ModificationInfo("Editing user"));
+        User editingUser = userService.getAuthenticatedUser();
+        comment.setCreation(new ModificationInfo(editingUser));
         return commentService.update(commentId, comment);
     }
 
     @RequestMapping(value = "/{ticketId}", method = RequestMethod.POST)
     public Ticket addNewComment(@PathVariable Long ticketId, @RequestBody Comment comment) {
-        // TODO: Get the real commenting user.
-        comment.setCreator(new ModificationInfo("Commenting user"));
+        User commentingUser = userService.getAuthenticatedUser();
+        comment.setCreation(new ModificationInfo(commentingUser));
         return commentService.addNewComment(ticketId, comment);
     }
 
     @Autowired
     public void setCommentService(CommentService commentService) {
         this.commentService = commentService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }
