@@ -1,10 +1,8 @@
 package fi.dalitso.ticketsystem.controller;
 
-import fi.dalitso.ticketsystem.domain.Comment;
-import fi.dalitso.ticketsystem.domain.ModificationInfo;
-import fi.dalitso.ticketsystem.domain.Ticket;
-import fi.dalitso.ticketsystem.domain.User;
+import fi.dalitso.ticketsystem.domain.*;
 import fi.dalitso.ticketsystem.service.CommentService;
+import fi.dalitso.ticketsystem.service.NotifierService;
 import fi.dalitso.ticketsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +16,7 @@ public class CommentController {
 
     private CommentService commentService;
     private UserService userService;
+    private NotifierService notifier;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Comment> getAllComments() {
@@ -28,14 +27,22 @@ public class CommentController {
     public Comment update(@PathVariable Long commentId, @RequestBody Comment comment) {
         User editingUser = userService.getAuthenticatedUser();
         comment.setCreation(new ModificationInfo(editingUser));
-        return commentService.update(commentId, comment);
+
+        Comment editedComment = commentService.update(commentId, comment);
+        notifier.notify(
+                Action.COMMENT_UPDATED, null, editedComment, editingUser);
+        return editedComment;
     }
 
     @RequestMapping(value = "/{ticketId}", method = RequestMethod.POST)
     public Ticket addNewComment(@PathVariable Long ticketId, @RequestBody Comment comment) {
         User commentingUser = userService.getAuthenticatedUser();
         comment.setCreation(new ModificationInfo(commentingUser));
-        return commentService.addNewComment(ticketId, comment);
+
+        Ticket ticket = commentService.addNewComment(ticketId, comment);
+        notifier.notify(
+                Action.COMMENT_CREATED, ticket, comment, commentingUser);
+        return ticket;
     }
 
     @Autowired
@@ -46,5 +53,10 @@ public class CommentController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setNotifier(NotifierService notifier) {
+        this.notifier = notifier;
     }
 }

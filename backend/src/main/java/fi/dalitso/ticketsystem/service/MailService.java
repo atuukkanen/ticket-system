@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 public class MailService {
 
     private JavaMailSender mailSender;
-    private MailContentBuilder mailContentBuilder;
 
     public void sendMessage(String to, String subject, String content) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -22,10 +21,5 @@ public class MailService {
     @Autowired
     public void setMailSender(JavaMailSender mailSender) {
         this.mailSender = mailSender;
-    }
-
-    @Autowired
-    public void setMailContentBuilder(MailContentBuilder mailContentBuilder) {
-        this.mailContentBuilder = mailContentBuilder;
     }
 }
