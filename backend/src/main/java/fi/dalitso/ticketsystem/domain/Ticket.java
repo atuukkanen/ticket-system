@@ -17,11 +17,11 @@ public class Ticket extends AbstractPersistable<Long> {
     private List<Image> images;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "creatorId")
-    private ModificationInfo creator;
+    @JoinColumn(name = "creationId")
+    private ModificationInfo creation;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "creatorId")
+    @JoinColumn(name = "editingId")
     private List<ModificationInfo> editingInfos;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -50,12 +50,12 @@ public class Ticket extends AbstractPersistable<Long> {
         this.editingInfos = editingInfos;
     }
 
-    public ModificationInfo getCreator() {
-        return creator;
+    public ModificationInfo getCreation() {
+        return creation;
     }
 
-    public void setCreator(ModificationInfo creator) {
-        this.creator = creator;
+    public void setCreation(ModificationInfo creator) {
+        this.creation = creator;
     }
 
     public Status getStatus() {
@@ -91,9 +91,9 @@ public class Ticket extends AbstractPersistable<Long> {
     }
 
     /**
-     * Updates ticket's data. Retains the creator and editing history.
+     * Updates ticket's data. Retains the creation and editing history.
      * Does not affect comments, they should be updated by other ways.
-     * Adds the creator of the update ticket to editing history.
+     * Adds the creation of the update ticket to editing history.
      * @param uTicket Ticket containing data to use for replacing current
      *                ticket's info.
      */
@@ -110,7 +110,7 @@ public class Ticket extends AbstractPersistable<Long> {
         if (uTicket.getImages() != null)
             setImages(uTicket.getImages());
 
-        editingInfos.add(uTicket.getCreator());
+        editingInfos.add(uTicket.getCreation());
     }
 
     /**

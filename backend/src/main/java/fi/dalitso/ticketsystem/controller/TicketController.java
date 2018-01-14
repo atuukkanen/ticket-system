@@ -3,7 +3,9 @@ package fi.dalitso.ticketsystem.controller;
 import fi.dalitso.ticketsystem.domain.ModificationInfo;
 import fi.dalitso.ticketsystem.domain.Status;
 import fi.dalitso.ticketsystem.domain.Ticket;
+import fi.dalitso.ticketsystem.domain.User;
 import fi.dalitso.ticketsystem.service.TicketService;
+import fi.dalitso.ticketsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class TicketController {
 
     private TicketService ticketService;
+    private UserService userService;
 
     /**
      * Fetches all tickets in the Ticket System.
@@ -52,8 +55,8 @@ public class TicketController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public Ticket createNewTicket(@RequestBody Ticket ticket) {
-        // TODO: Get real creator.
-        ticket.setCreator(new ModificationInfo("CreatorName"));
+        User ticketCreator = userService.getAuthenticatedUser();
+        ticket.setCreation(new ModificationInfo(ticketCreator));
         return ticketService.addNewTicket(ticket);
     }
 
@@ -67,8 +70,8 @@ public class TicketController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Ticket updateTicket(@PathVariable Long id, @RequestBody Ticket uTicket) {
-        // TODO: Get real editing user.
-        uTicket.setCreator(new ModificationInfo("EditingName"));
+        User ticketUpdater = userService.getAuthenticatedUser();
+        uTicket.setCreation(new ModificationInfo(ticketUpdater));
         return ticketService.update(id, uTicket);
     }
 
@@ -81,4 +84,12 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
+    /**
+     * Simply sets the UserService.
+     * @param userService The UserService to set.
+     */
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 }

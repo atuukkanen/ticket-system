@@ -2,26 +2,31 @@ package fi.dalitso.ticketsystem.domain;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
 public class ModificationInfo extends AbstractPersistable<Long> {
-    private String creator;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "creatorId")
+    private User creator;
     private Date creationTime;
 
     public ModificationInfo() {}
 
-    public ModificationInfo(String creator) {
+    public ModificationInfo(User creator) {
         this.creator = creator;
         creationTime = new Date();
     }
 
-    public String getCreator() {
+    public User getCreator() {
         return creator;
     }
 
-    public void setCreator(String creator) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 
