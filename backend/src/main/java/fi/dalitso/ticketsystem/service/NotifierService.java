@@ -34,6 +34,12 @@ public class NotifierService {
                 contentArguments.put("username", authenticatedUser.getNickname());
                 contentArguments.put("ticketid", ticket.getId());
                 break;
+            case ASSIGNEE_CHANGED:
+                to = ticket.getCreation().getCreator().getEmail();
+                subject = "Assignee in your ticket #" + ticket.getId() + ": '" + ticket.getHeader() + "' was changed";
+                contentArguments.put("username", ticket.getAssignee().getNickname());
+                contentArguments.put("ticketid", ticket.getId());
+                break;
             default:
                 return;
         }
