@@ -29,10 +29,38 @@ class TicketView extends Component {
             this.setState({ticket: data});
         });
     }
+    handleClose = (event) => {
+        if (this.state.comment.length > 0) this.sendComment();
+        fetch('/api/ticket/close/' + this.state.ticket.id, {
+            method: 'PUT'
+        }).then(function () {
+            window.location.reload();
+        });
+        event.preventDefault();
+    };
     handleEditorChange = (text) => {
         this.setState({ comment: text});
     };
+    handleOpen = (event) => {
+        if (this.state.comment.length > 0) this.sendComment();
+        fetch('/api/ticket/open/' + this.state.ticket.id, {
+            method: 'PUT'
+        }).then(function () {
+            window.location.reload();
+        });
+        event.preventDefault();
+    };
     handleSubmit = (event) => {
+        this.sendComment(function () {
+            window.location.reload();
+        });
+        event.preventDefault();
+    };
+    parseMD(text) {
+        if (text === undefined || text === null) return { __html: "" };
+        return { __html: Marked(text) };
+    }
+    sendComment(fn) {
         fetch('/api/comment/' + this.state.ticket.id, {
             method: 'POST',
             headers: {
@@ -41,13 +69,8 @@ class TicketView extends Component {
             },
             body: JSON.stringify({commentText: this.state.comment}),
         }).then(function () {
-            window.location.reload();
+            if (fn !== undefined) fn();
         });
-        event.preventDefault();
-    };
-    parseMD(text) {
-        if (text === undefined || text === null) return { __html: "" };
-        return { __html: Marked(text) };
     }
     render() {
         return (
@@ -78,7 +101,14 @@ class TicketView extends Component {
                             showSearch={false}
                             onPreview={value => (Marked(value))}
                         />
-                        <button type="submit" className="btn btn-success">Kommentoi</button>
+                        <div className="submitRow">
+                            <button type="submit" className="btn btn-success">Kommentoi</button>
+                            { this.state.ticket.status === "OPEN" ? (
+                                <button type="submit" className="btn btn-danger" onClick={this.handleClose}>{ this.state.comment.length > 0 ? "Kommentoi ja sulje" : "Sulje" }</button>
+                            ) : (
+                                <button type="submit" className="btn btn-secondary" onClick={this.handleOpen}>{ this.state.comment.length > 0 ? "Kommentoi ja avaa" : "Avaa"  }</button>
+                            )}
+                        </div>
                     </form>
                 </div>
             </div>
