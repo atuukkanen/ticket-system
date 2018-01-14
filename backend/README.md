@@ -20,3 +20,7 @@
 ## Swagger Documentation
 
 Swagger UI documentation for endpoints is available in host/application-root/swagger-ui.html
+
+## Mail Templates
+
+Mail templates use Thymeleaf. Mail template options are defined in resources/mailtemplate.properties.
