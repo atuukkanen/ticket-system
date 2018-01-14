@@ -10,12 +10,12 @@ class TicketView extends Component {
             ticket: {
                 labels: [],
                 comments: [],
-                creator: {}
+                creation: {
+                    creator: {}
+                }
             },
             comment: ''
         };
-        this.handleEditorChange = this.handleEditorChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentWillMount() {
         fetch("http://localhost:8080/ticket/" + this.props.match.params.id).then(result => {
@@ -24,10 +24,10 @@ class TicketView extends Component {
             this.setState({ticket: data});
         });
     }
-    handleEditorChange(text) {
+    handleEditorChange = (text) => {
         this.setState({ comment: text});
-    }
-    handleSubmit(event) {
+    };
+    handleSubmit = (event) => {
         fetch('http://localhost:8080/comment/' + this.state.ticket.id, {
             method: 'POST',
             headers: {
@@ -39,7 +39,7 @@ class TicketView extends Component {
             window.location.reload();
         });
         event.preventDefault();
-    }
+    };
     parseMD(text) {
         if (text === undefined || text === null) return { __html: "" };
         return { __html: Marked(text) };
@@ -49,7 +49,7 @@ class TicketView extends Component {
             <div className="ticketView">
                 <div className="infoRow">
                     <div className={"status status-" + this.state.ticket.status}>{this.state.ticket.status}</div>
-                    <span><b>Tiketti #{this.state.ticket.id}</b> avattu {this.state.ticket.createTime } käyttäjän <b>{this.state.ticket.creator.name}</b> toimesta</span>
+                    <span><b>Tiketti #{this.state.ticket.id}</b> avattu {this.state.ticket.createTime } käyttäjän <b>{this.state.ticket.creation.creator.name}</b> toimesta</span>
                 </div>
                 <h3>{ this.state.ticket.header }</h3>
                 <hr />
@@ -59,7 +59,7 @@ class TicketView extends Component {
                     return (
                         <div key={comment.id} className="commentBlock">
                             <div className="commentInfo">
-                                {comment.creator.name} <span>@{comment.creator.username} kommentoi {comment.createTime}</span>
+                                {comment.creation.creator.name} <span>@{comment.creation.creator.username} kommentoi {comment.createTime}</span>
                             </div>
                             <div dangerouslySetInnerHTML={ this.parseMD(comment.commentText) }></div>
                         </div>
